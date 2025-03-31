@@ -1,14 +1,14 @@
-from django.shortcuts import get_object_or_404
-from rest_framework import filters, viewsets
+from django.http import Http404
+from rest_framework import viewsets, status, permissions
+from rest_framework.exceptions import ValidationError
+from rest_framework.generics import get_object_or_404
 from rest_framework.pagination import LimitOffsetPagination
-from rest_framework.permissions import AllowAny
-from django_filters.rest_framework import DjangoFilterBackend
-
-from posts.models import Follow, Group, Post
-from .permissions import IsOwnerOrReadOnly
-from .serializers import (CommentSerializer, FollowSerializer,
-                          GroupSerializer, PostSerializer)
-
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.filters import SearchFilter
+from api.serializers import (PostSerializer, FollowSerializer,
+                             CommentSerializer, GroupSerializer)
+from posts.models import Post, Follow, Group, Comment
+from rest_framework.response import Response
 
 class ViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -132,11 +132,11 @@ class CommentViewSet(viewsets.ModelViewSet):
             self.perform_destroy(instance)
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Http404:
-            return Response({"detail": "Comment"
-                                       " cannot"
-                                       " be"
-                                       " found"}, 
-                                       status=status.HTTP_404_NOT_FOUND)
+            return Response({"detail":  "Comment"
+                                        " cannot"
+                                        " be"
+                                        " found"}, 
+                                        status=status.HTTP_404_NOT_FOUND)
 
     def get_queryset(self):
         post_id = self.kwargs.get('post_id')

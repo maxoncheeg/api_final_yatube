@@ -90,7 +90,7 @@ class CommentViewSet(viewsets.ModelViewSet):
                              " cannot"
                              " be"
                              " found"},
-                             status=status.HTTP_404_NOT_FOUND)
+                            status=status.HTTP_404_NOT_FOUND)
 
     def partial_update(self, request, *args, **kwargs):
         try:
@@ -118,7 +118,7 @@ class CommentViewSet(viewsets.ModelViewSet):
                              " cannot"
                              " be"
                              " found"},
-                             status=status.HTTP_404_NOT_FOUND)
+                            status=status.HTTP_404_NOT_FOUND)
 
     def destroy(self, request, *args, **kwargs):
         try:
@@ -129,7 +129,7 @@ class CommentViewSet(viewsets.ModelViewSet):
                                  " rights to"
                                  " perform"
                                  " this action"},
-                                 status=status.HTTP_403_FORBIDDEN)
+                                status=status.HTTP_403_FORBIDDEN)
             self.perform_destroy(instance)
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Http404:
@@ -137,7 +137,7 @@ class CommentViewSet(viewsets.ModelViewSet):
                              " cannot"
                              " be"
                              " found"},
-                             status=status.HTTP_404_NOT_FOUND)
+                            status=status.HTTP_404_NOT_FOUND)
 
     def get_queryset(self):
         post_id = self.kwargs.get('post_id')

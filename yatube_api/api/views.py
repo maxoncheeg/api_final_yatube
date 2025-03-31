@@ -40,7 +40,7 @@ class PostViewSet(ViewSet):
             return Response(
                 {"detail": "You do not "
                  " have access"
-                 " to do" 
+                 " to do"
                  " this action"}, status=status.HTTP_403_FORBIDDEN)
         else:
             serializer = self.get_serializer(instance, data=request.data)
@@ -89,9 +89,9 @@ class CommentViewSet(viewsets.ModelViewSet):
             return Response({"detail": "Comment"
                              " cannot"
                              " be"
-                             " found"}, 
-                                       status=status.HTTP_404_NOT_FOUND)
-    
+                             " found"},
+                             status=status.HTTP_404_NOT_FOUND)
+
     def partial_update(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
@@ -117,27 +117,27 @@ class CommentViewSet(viewsets.ModelViewSet):
             return Response({"detail": "Comment"
                              " cannot"
                              " be"
-                             " found"}, 
-                                    status=status.HTTP_404_NOT_FOUND)
+                             " found"},
+                             status=status.HTTP_404_NOT_FOUND)
 
     def destroy(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
             if instance.author != request.user:
                 return Response({"detail": "You don't "
-                                           " have enough"
-                                           " rights to"
-                                           " perform"
-                                           " this action"},
-                                           status=status.HTTP_403_FORBIDDEN)
+                                 " have enough"
+                                 " rights to"
+                                 " perform"
+                                 " this action"},
+                                 status=status.HTTP_403_FORBIDDEN)
             self.perform_destroy(instance)
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Http404:
             return Response({"detail": "Comment"
-                                        " cannot"
-                                        " be"
-                                        " found"}, 
-                                        status=status.HTTP_404_NOT_FOUND)
+                             " cannot"
+                             " be"
+                             " found"},
+                             status=status.HTTP_404_NOT_FOUND)
 
     def get_queryset(self):
         post_id = self.kwargs.get('post_id')
@@ -165,7 +165,7 @@ class FollowViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     filter_backends = [SearchFilter]
     search_fields = ['following__username']
- 
+
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)

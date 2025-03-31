@@ -67,7 +67,7 @@ class PostViewSet(ViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class CommentViewSet(viewsets.ModelViewSet):
+class CommentViewSet(ViewSet):
     serializer_class = CommentSerializer
 
     def perform_create(self, serializer):

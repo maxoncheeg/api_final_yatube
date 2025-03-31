@@ -39,9 +39,9 @@ class PostViewSet(ViewSet):
         if instance.author != request.user:
             return Response(
                 {"detail": "You do not "
-                            " have access"
-                            " to do" 
-                            " this action"}, status=status.HTTP_403_FORBIDDEN)
+                        " have access"
+                        " to do" 
+                        " this action"}, status=status.HTTP_403_FORBIDDEN)
         else:
             serializer = self.get_serializer(instance, data=request.data)
             serializer.is_valid(raise_exception=True)
@@ -59,9 +59,9 @@ class PostViewSet(ViewSet):
         if instance.author != request.user:
             return Response(
                 {"detail": "You do not "
-                            " have access"
-                            " to do"
-                            " this action"}, status=status.HTTP_403_FORBIDDEN)
+                        " have access"
+                        " to do"
+                        " this action"}, status=status.HTTP_403_FORBIDDEN)
 
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -115,10 +115,10 @@ class CommentViewSet(viewsets.ModelViewSet):
 
         except Http404:
             return Response({"detail": "Comment"
-                                        " cannot"
-                                        " be"
-                                        " found"}, 
-                                       status=status.HTTP_404_NOT_FOUND)
+                                    " cannot"
+                                    " be"
+                                    " found"}, 
+                                    status=status.HTTP_404_NOT_FOUND)
 
     def destroy(self, request, *args, **kwargs):
         try:
@@ -177,7 +177,6 @@ class FollowViewSet(viewsets.ModelViewSet):
             headers=headers
         )
 
-
     def get_queryset(self):
         if not self.request.user.is_authenticated:
             return Response({"detail": "You don't "
@@ -195,7 +194,6 @@ class FollowViewSet(viewsets.ModelViewSet):
                 following__username__icontains=search_query
             )
         return queryset
-
 
     def perform_create(self, serializer):
         following_user = serializer.validated_data['following']

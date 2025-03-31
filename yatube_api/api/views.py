@@ -10,9 +10,11 @@ from api.serializers import (PostSerializer, FollowSerializer,
 from posts.models import Post, Follow, Group, Comment
 from rest_framework.response import Response
 
+
 class ViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     pagination_class = LimitOffsetPagination
+
 
 class PostViewSet(ViewSet):
     queryset = Post.objects.all()
@@ -65,7 +67,6 @@ class PostViewSet(ViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
 
@@ -114,9 +115,9 @@ class CommentViewSet(viewsets.ModelViewSet):
 
         except Http404:
             return Response({"detail": "Comment"
-                                       " cannot"
-                                       " be"
-                                       " found"}, 
+                                        " cannot"
+                                        " be"
+                                        " found"}, 
                                        status=status.HTTP_404_NOT_FOUND)
 
     def destroy(self, request, *args, **kwargs):
@@ -132,7 +133,7 @@ class CommentViewSet(viewsets.ModelViewSet):
             self.perform_destroy(instance)
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Http404:
-            return Response({"detail":  "Comment"
+            return Response({"detail": "Comment"
                                         " cannot"
                                         " be"
                                         " found"}, 
@@ -176,9 +177,10 @@ class FollowViewSet(viewsets.ModelViewSet):
             headers=headers
         )
 
+
     def get_queryset(self):
         if not self.request.user.is_authenticated:
-            return Response({"detail":  "You don't "
+            return Response({"detail": "You don't "
                                         " have enough"
                                         " rights to"
                                         " perform"
@@ -193,6 +195,7 @@ class FollowViewSet(viewsets.ModelViewSet):
                 following__username__icontains=search_query
             )
         return queryset
+
 
     def perform_create(self, serializer):
         following_user = serializer.validated_data['following']
